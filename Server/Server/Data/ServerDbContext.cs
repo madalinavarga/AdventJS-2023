@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Server.Data.Models;
+using Server.Data.Entities;
 
 namespace Server.Data;
 
@@ -11,8 +11,8 @@ public class ServerDbContext : DbContext
 
     public DbSet<UserStatus> UserStatus { get; set; }
 
-    public DbSet<Users> Users { get; set; }
-    public DbSet<Events> Events { get; set; }
+    public DbSet<User> Users { get; set; }
+    public DbSet<Event> Events { get; set; }
     public DbSet<Pairings> Pairings { get; set; }
     public DbSet<ThankYou> ThankYou { get; set; }
     public DbSet<WishList> WishList { get; set; }

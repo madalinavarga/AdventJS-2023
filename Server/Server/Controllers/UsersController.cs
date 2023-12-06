@@ -6,9 +6,9 @@ namespace Server.Controllers;
 [Route("[controller]")]
 public class UsersController: ControllerBase
 {
-    private readonly ILogger<WeatherForecastController> _logger;
+    private readonly ILogger<UsersController> _logger;
 
-    public UsersController(ILogger<WeatherForecastController> logger)
+    public UsersController(ILogger<UsersController> logger)
     {
         _logger = logger;
     }

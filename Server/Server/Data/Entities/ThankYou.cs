@@ -1,4 +1,4 @@
-﻿namespace Server.Data.Models
+﻿namespace Server.Data.Entities
 {
     public class ThankYou
     {
@@ -6,11 +6,11 @@
         public Guid UserId { get; set; }
         public Guid EventId { get; set; }
         public Guid ToUserID { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
         public string Message { get; set; }
 
-        public virtual Users User { get; set; }
-        public virtual Users ToUser { get; set; }
-        public virtual Events Event { get; set; }
+        public virtual User User { get; set; }
+        public virtual User ToUser { get; set; }
+        public virtual Event Event { get; set; }
     }
 }

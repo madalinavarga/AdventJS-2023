@@ -12,7 +12,7 @@ using Server.Data;
 namespace Server.Migrations
 {
     [DbContext(typeof(ServerDbContext))]
-    [Migration("20231205161413_SetDBModel")]
+    [Migration("20231206145441_SetDBModel")]
     partial class SetDBModel
     {
         /// <inheritdoc />
@@ -25,13 +25,13 @@ namespace Server.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Server.Data.Models.Events", b =>
+            modelBuilder.Entity("Server.Data.Entities.Event", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("Date")
@@ -41,10 +41,10 @@ namespace Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("SendReminder")
+                    b.Property<bool?>("SendReminder")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -52,13 +52,13 @@ namespace Server.Migrations
                     b.ToTable("Events");
                 });
 
-            modelBuilder.Entity("Server.Data.Models.Pairings", b =>
+            modelBuilder.Entity("Server.Data.Entities.Pairings", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("EventId")
@@ -70,7 +70,7 @@ namespace Server.Migrations
                     b.Property<Guid>("SantaId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -84,13 +84,13 @@ namespace Server.Migrations
                     b.ToTable("Pairings");
                 });
 
-            modelBuilder.Entity("Server.Data.Models.ThankYou", b =>
+            modelBuilder.Entity("Server.Data.Entities.ThankYou", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("EventId")
@@ -117,41 +117,16 @@ namespace Server.Migrations
                     b.ToTable("ThankYou");
                 });
 
-            modelBuilder.Entity("Server.Data.Models.UserStatus", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("EventId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EventId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserStatus");
-                });
-
-            modelBuilder.Entity("Server.Data.Models.Users", b =>
+            modelBuilder.Entity("Server.Data.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Avatar")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -173,7 +148,7 @@ namespace Server.Migrations
                     b.Property<int>("Role")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -181,13 +156,37 @@ namespace Server.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Server.Data.Models.WishList", b =>
+            modelBuilder.Entity("Server.Data.Entities.UserStatus", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserStatus");
+                });
+
+            modelBuilder.Entity("Server.Data.Entities.WishList", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("EventId")
@@ -201,22 +200,18 @@ namespace Server.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("SiteDescription")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SiteImage")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SiteTitle")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Url")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("UserId")
@@ -231,21 +226,21 @@ namespace Server.Migrations
                     b.ToTable("WishList");
                 });
 
-            modelBuilder.Entity("Server.Data.Models.Pairings", b =>
+            modelBuilder.Entity("Server.Data.Entities.Pairings", b =>
                 {
-                    b.HasOne("Server.Data.Models.Events", "Event")
+                    b.HasOne("Server.Data.Entities.Event", "Event")
                         .WithMany()
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Server.Data.Models.Users", "Person")
+                    b.HasOne("Server.Data.Entities.User", "Person")
                         .WithMany()
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Server.Data.Models.Users", "Santa")
+                    b.HasOne("Server.Data.Entities.User", "Santa")
                         .WithMany()
                         .HasForeignKey("SantaId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -258,21 +253,21 @@ namespace Server.Migrations
                     b.Navigation("Santa");
                 });
 
-            modelBuilder.Entity("Server.Data.Models.ThankYou", b =>
+            modelBuilder.Entity("Server.Data.Entities.ThankYou", b =>
                 {
-                    b.HasOne("Server.Data.Models.Events", "Event")
+                    b.HasOne("Server.Data.Entities.Event", "Event")
                         .WithMany()
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Server.Data.Models.Users", "ToUser")
+                    b.HasOne("Server.Data.Entities.User", "ToUser")
                         .WithMany()
                         .HasForeignKey("ToUserID")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Server.Data.Models.Users", "User")
+                    b.HasOne("Server.Data.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -285,15 +280,15 @@ namespace Server.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Server.Data.Models.UserStatus", b =>
+            modelBuilder.Entity("Server.Data.Entities.UserStatus", b =>
                 {
-                    b.HasOne("Server.Data.Models.Events", "Event")
+                    b.HasOne("Server.Data.Entities.Event", "Event")
                         .WithMany()
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Server.Data.Models.Users", "User")
+                    b.HasOne("Server.Data.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -304,15 +299,15 @@ namespace Server.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Server.Data.Models.WishList", b =>
+            modelBuilder.Entity("Server.Data.Entities.WishList", b =>
                 {
-                    b.HasOne("Server.Data.Models.Events", "Event")
+                    b.HasOne("Server.Data.Entities.Event", "Event")
                         .WithMany()
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Server.Data.Models.Users", "User")
+                    b.HasOne("Server.Data.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
