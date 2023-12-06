@@ -19,6 +19,7 @@ namespace Server.Data.Repositories;
         public Task AddAsync(User user)
         {
             _serverDbContext.Users.AddAsync(user);
+            _serverDbContext.SaveChanges();
             return Task.CompletedTask;
         }
     }
