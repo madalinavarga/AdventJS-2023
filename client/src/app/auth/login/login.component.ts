@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginApiService } from './services/login-api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,7 @@ import { LoginApiService } from './services/login-api.service';
 export class LoginComponent implements OnInit {
   public loginForm!: FormGroup;
 
-  constructor(private _fb: FormBuilder) {
+  constructor(private _fb: FormBuilder, private _loginService: LoginApiService, private _router: Router) {
   }
 
   ngOnInit(): void {
@@ -21,14 +22,15 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    // this._loginService.login(this.loginForm.value).subscribe({
-    //   next: data => {
-    //     console.log(data);
-    //   },
-    //   error: error => {
-    //     console.error('There was an error!', error);
-    //   }
-    // })
+    this._loginService.login(this.loginForm.value).subscribe({
+      next: (data) => {
+        localStorage.setItem("token=", data.token);
+        this._router.navigate(['/event']);
+      },
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    })
   }
 
   get f() {

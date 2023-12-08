@@ -7,17 +7,17 @@ import { OnInit } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class LoginApiService implements OnInit{
+export class LoginApiService implements OnInit {
 
-  baseUrl = environment.apiURL + 'favorites';
+  baseUrl = environment.apiURL + 'login';
 
   constructor(private httpClient: HttpClient) { }
 
   ngOnInit(): void {
-      
+
   }
 
   login(details: LoginRequest) {
-    return this.httpClient.post(this.baseUrl, details);
+    return this.httpClient.post<{token:string}>(this.baseUrl, details);
   }
 }
