@@ -1,1 +1,44 @@
-<p>event works!</p>
+<div
+  class="bg-[url('/assets/bg__reg.png')] h-full bg-cover grid place-items-center"
+>
+  <div class="flex flex-col text-3xl">
+    <p class="text-white mt-62 mb-4 mx-auto text-5xl">- SET UP YOUR GROUP -</p>
+    <form
+      [formGroup]="newGroupForm"
+      class="mt-30 flex flex-col gap-y-3"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="">
+        <input type="text" class="p-2" formControlName="name" />
+        <div
+          *ngIf="f['name'].errors && f['name'].touched"
+          class="alert alert-danger"
+        >
+          Name is required.
+        </div>
+      </div>
+
+      <div class="">
+        <input type="date" class="p-2" formControlName="date" />
+        <div
+          *ngIf="f['date'].errors && f['date'].touched"
+          class="alert alert-danger"
+        >
+          Date is required.
+        </div>
+      </div>
+      <div class="flex align-items-center gap-2">
+        <input type="checkbox" class="w-6 h-6" formControlName="sendReminder" />
+        <label class="text-2xl">SEND OUT A REMINDER BEFORE EVENT</label>
+      </div>
+
+      <button
+        type="submit"
+        class="btn bg-[#FAC900] rounded-full p-2 cursor-pointer hover:bg-[#fac800b4]"
+        [disabled]="!newGroupForm.valid"
+      >
+        CREATE
+      </button>
+    </form>
+  </div>
+</div>

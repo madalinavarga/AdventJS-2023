@@ -6,4 +6,10 @@ export const routes: Routes = [{
 },
 {
     path: 'event', component: EventComponent
-}];
+},
+{
+    path: '**', redirectTo: 'auth/login'
+},
+
+
+];
