@@ -1,1 +1,61 @@
-<p>register works!</p>
+<div
+  class="bg-[url('/assets/bg__reg.png')] h-full bg-cover grid place-items-center"
+>
+  <div class="flex flex-col text-3xl">
+    <p class="text-white mt-62 mb-4 mx-auto text-6xl">- Register -</p>
+    <form
+      [formGroup]="registerForm"
+      class="mt-30 flex flex-col gap-y-3"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="">
+        <input type="text" class="p-2" formControlName="firstName" />
+        <div
+          *ngIf="f['firstName'].errors && f['firstName'].touched"
+          class="alert alert-danger"
+        >
+          First name is required.
+        </div>
+      </div>
+      <div class="">
+        <input type="text" class="p-2" formControlName="lastName" />
+        <div
+          *ngIf="f['lastName'].errors && f['lastName'].touched"
+          class="alert alert-danger"
+        >
+          Last name is required.
+        </div>
+      </div>
+      <div class="">
+        <input type="email" class="p-2" formControlName="email" />
+        <div
+          *ngIf="f['email'].errors && f['email'].touched"
+          class="alert alert-danger"
+        >
+          Email is required.
+        </div>
+      </div>
+
+      <div class="">
+        <input type="password" class="p-2" formControlName="password" />
+        <div
+          *ngIf="f['password'].errors && f['password'].touched"
+          class="alert alert-danger"
+        >
+          Password is required.
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="btn bg-[#FAC900] rounded-full p-2 cursor-pointer hover:bg-[#fac800b4]"
+        [disabled]="!registerForm.valid"
+      >
+        SUBMIT
+      </button>
+    </form>
+    <a routerLink="/auth/register" class="mx-auto text-xl mt-4 cursor-pointer"
+      >Already have an Account?</a
+    >
+  </div>
+</div>

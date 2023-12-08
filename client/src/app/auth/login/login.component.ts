@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
 export class LoginComponent implements OnInit {
   public loginForm!: FormGroup;
@@ -36,5 +36,4 @@ export class LoginComponent implements OnInit {
   get f() {
     return this.loginForm.controls;
   }
-
 }
