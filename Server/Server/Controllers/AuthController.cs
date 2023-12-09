@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Server.Controllers.ViewModel.Auth;
@@ -23,6 +24,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("/login")]
+    [AllowAnonymous]
     public async Task<IActionResult> Login([FromBody] LoginRequestModel loginModel)
     {
         User user = await _usersRepository.GetByEmail(loginModel.Email);
@@ -44,6 +46,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("/register")]
+    [AllowAnonymous]
     public async Task<IActionResult> Register([FromBody] RegisterRequestModel registerModel)
     {
         var user = await _usersRepository.GetByEmail(registerModel.Email);
