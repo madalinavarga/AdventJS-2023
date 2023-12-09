@@ -16,7 +16,7 @@ namespace Server.Data.Repositories
             var createdEvent = await _serverDbContext.Events.AddAsync(newEvent);
             _serverDbContext.SaveChanges();
             
-            return createdEvent;
+            return createdEvent.Entity;
         }
     }
 }

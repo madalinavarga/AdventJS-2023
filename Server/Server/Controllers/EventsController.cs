@@ -7,14 +7,15 @@ namespace Server.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class EventController: ControllerBase
+public class EventsController: ControllerBase
 {
-    private readonly ILogger<EventController> _logger;
+    private readonly ILogger<EventsController> _logger;
     private readonly IEventRepository _eventRepository;
 
-    public EventController(ILogger<EventController> logger)
+    public EventsController(ILogger<EventsController> logger, IEventRepository eventRepository)
     {
         _logger = logger;
+        _eventRepository = eventRepository;
     }
 
     [HttpPost]
