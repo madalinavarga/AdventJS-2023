@@ -24,6 +24,7 @@ public class EventsController: ControllerBase
         var newEvent = new Event
         {
             Name = eventDetails.Name,
+            Date = eventDetails.Date,
             CreatedAt = DateTime.UtcNow,
             SendReminder = eventDetails.SendReminder,
         };
