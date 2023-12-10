@@ -1,6 +1,6 @@
 ﻿namespace Server.Data.Entities
 {
-    public class UserStatus
+    public class Invite
     {
         public Guid Id { get; set; }
         public Guid EventId { get; set; }

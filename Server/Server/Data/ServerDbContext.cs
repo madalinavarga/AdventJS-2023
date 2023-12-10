@@ -9,7 +9,7 @@ public class ServerDbContext : DbContext
     {
     }
 
-    public DbSet<UserStatus> UserStatus { get; set; }
+    public DbSet<Invite> Invite { get; set; }
 
     public DbSet<User> Users { get; set; }
     public DbSet<Event> Events { get; set; }
@@ -21,12 +21,12 @@ public class ServerDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<UserStatus>()
+        modelBuilder.Entity<Invite>()
             .HasOne(u => u.User)
             .WithMany()
             .HasForeignKey(e => e.UserId);
 
-        modelBuilder.Entity<UserStatus>()
+        modelBuilder.Entity<Invite>()
             .HasOne(u => u.Event)
             .WithMany()
             .HasForeignKey(e => e.EventId);

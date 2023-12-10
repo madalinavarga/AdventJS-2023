@@ -12,8 +12,8 @@ using Server.Data;
 namespace Server.Migrations
 {
     [DbContext(typeof(ServerDbContext))]
-    [Migration("20231206145441_SetDBModel")]
-    partial class SetDBModel
+    [Migration("20231210094736_CreateTables")]
+    partial class CreateTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,6 +50,30 @@ namespace Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Events");
+                });
+
+            modelBuilder.Entity("Server.Data.Entities.Invite", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Invite");
                 });
 
             modelBuilder.Entity("Server.Data.Entities.Pairings", b =>
@@ -156,30 +180,6 @@ namespace Server.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Server.Data.Entities.UserStatus", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("EventId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int?>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EventId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserStatus");
-                });
-
             modelBuilder.Entity("Server.Data.Entities.WishList", b =>
                 {
                     b.Property<Guid>("Id")
@@ -224,6 +224,25 @@ namespace Server.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("WishList");
+                });
+
+            modelBuilder.Entity("Server.Data.Entities.Invite", b =>
+                {
+                    b.HasOne("Server.Data.Entities.Event", "Event")
+                        .WithMany()
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Server.Data.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Event");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Server.Data.Entities.Pairings", b =>
@@ -276,25 +295,6 @@ namespace Server.Migrations
                     b.Navigation("Event");
 
                     b.Navigation("ToUser");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Server.Data.Entities.UserStatus", b =>
-                {
-                    b.HasOne("Server.Data.Entities.Event", "Event")
-                        .WithMany()
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Server.Data.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Event");
 
                     b.Navigation("User");
                 });

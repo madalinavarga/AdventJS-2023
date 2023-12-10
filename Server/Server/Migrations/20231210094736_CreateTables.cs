@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Server.Migrations
 {
     /// <inheritdoc />
-    public partial class SetDBModel : Migration
+    public partial class CreateTables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -44,6 +44,32 @@ namespace Server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Invite",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EventId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Invite", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Invite_Events_EventId",
+                        column: x => x.EventId,
+                        principalTable: "Events",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Invite_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -111,32 +137,6 @@ namespace Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserStatus",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    EventId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserStatus", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserStatus_Events_EventId",
-                        column: x => x.EventId,
-                        principalTable: "Events",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UserStatus_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "WishList",
                 columns: table => new
                 {
@@ -170,6 +170,16 @@ namespace Server.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Invite_EventId",
+                table: "Invite",
+                column: "EventId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Invite_UserId",
+                table: "Invite",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Pairings_EventId",
                 table: "Pairings",
                 column: "EventId");
@@ -200,16 +210,6 @@ namespace Server.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserStatus_EventId",
-                table: "UserStatus",
-                column: "EventId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserStatus_UserId",
-                table: "UserStatus",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_WishList_EventId",
                 table: "WishList",
                 column: "EventId");
@@ -224,13 +224,13 @@ namespace Server.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Invite");
+
+            migrationBuilder.DropTable(
                 name: "Pairings");
 
             migrationBuilder.DropTable(
                 name: "ThankYou");
-
-            migrationBuilder.DropTable(
-                name: "UserStatus");
 
             migrationBuilder.DropTable(
                 name: "WishList");
