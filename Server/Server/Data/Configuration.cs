@@ -13,6 +13,7 @@ namespace Server.Data
             });
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IEventRepository, EventRepository>();   
+            services.AddScoped<IInviteRepository, InviteRepository>();
         }
     }
 }

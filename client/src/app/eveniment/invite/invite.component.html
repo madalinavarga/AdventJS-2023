@@ -1,1 +1,36 @@
-<p>invite works!</p>
+<div
+  class="bg-[url('/assets/invite.png')] h-full bg-cover flex flex-col place-items-start"
+>
+  @if(eveniment){
+  <div class="flex flex-col text-2xl text-white ml-[30%] mt-32">
+    <span>{{ eveniment.date | dateCountdownPipe }}</span>
+    <div class="text-6xl">{{ eveniment.name | uppercase }}</div>
+  </div>
+  }
+  <form [formGroup]="inviteForm" (ngSubmit)="(handleOnSubmit)" class="text-3xl ml-[30%]">
+    <span class="text-lg text-white">INVITE A FRIEND OR A FAMILY MEMBER</span>
+    <div class="flex flex-row gap-2 bg-green-600 p-4">
+      <div>
+        <input type="text" class="p-2" formControlName="name" />
+        @if(f['name'].errors && f['name'].touched){
+        <div class="alert alert-danger">Name is required.</div>
+        }
+      </div>
+
+      <div class="">
+        <input type="email" class="p-2" formControlName="email" />
+        @if(f['email'].errors && f['email'].touched){
+        <div class="alert alert-danger">Email is required.</div>
+        }
+      </div>
+
+      <button
+        type="submit"
+        class="btn bg-[#FAC900] rounded-full p-2 px-4 cursor-pointer hover:bg-[#fac800b4] border-white border"
+        [disabled]="!inviteForm.valid"
+      >
+        +
+      </button>
+    </div>
+  </form>
+</div>

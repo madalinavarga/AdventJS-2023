@@ -18,9 +18,32 @@ public class EventsController: ControllerBase
         _eventRepository = eventRepository;
     }
 
+    [HttpGet("{id}")]
+
+    public async Task<IActionResult> Get([FromRoute] Guid id)
+    {
+        try
+        {
+            var foundedEvent= await _eventRepository.Get(id);
+            if (foundedEvent == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(foundedEvent);
+            }
+        }
+        catch (Exception ex)
+        {
+            return Problem();
+        }
+    }
+
     [HttpPost]
     public async Task<IActionResult> CreateEvent([FromBody] EventRequestModel eventDetails)
     {
+        //TODO add owner
         var newEvent = new Event
         {
             Name = eventDetails.Name,

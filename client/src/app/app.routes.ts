@@ -7,10 +7,10 @@ export const routes: Routes = [{
     path: 'auth', loadChildren: () => import("./auth/auth.module").then(m => m.AuthModule)
 },
 {
-    path: 'event', component: EventComponent
+    path: 'event/:id/invite', component: InviteComponent,
 },
 {
-    path: 'event/invite', component: InviteComponent
+    path: 'event', component: EventComponent
 },
 {
     path: 'dashboard', redirectTo: 'event/invite'
@@ -18,6 +18,4 @@ export const routes: Routes = [{
 {
     path: '**', redirectTo: 'auth/login'
 },
-
-
 ];

@@ -1,4 +1,5 @@
-﻿using Server.Data.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Server.Data.Entities;
 
 namespace Server.Data.Repositories
 {
@@ -17,6 +18,12 @@ namespace Server.Data.Repositories
             _serverDbContext.SaveChanges();
             
             return createdEvent.Entity;
+        }
+
+        public Task<Event> Get(Guid id)
+        {
+            var foundedEvent =  _serverDbContext.Events.FirstOrDefaultAsync(e=>e.Id==id);
+            return foundedEvent;
         }
     }
 }

@@ -10,22 +10,16 @@
     >
       <div class="">
         <input type="text" class="p-2" formControlName="name" />
-        <div
-          *ngIf="f['name'].errors && f['name'].touched"
-          class="alert alert-danger"
-        >
-          Name is required.
-        </div>
+        @if(f['name'].errors && f['name'].touched){
+        <div class="alert alert-danger">Name is required</div>
+        }
       </div>
 
       <div class="">
         <input type="date" class="p-2" formControlName="date" />
-        <div
-          *ngIf="f['date'].errors && f['date'].touched"
-          class="alert alert-danger"
-        >
-          Date is required.
-        </div>
+        @if(f['date'].errors && f['date'].touched){
+        <div class="alert alert-danger">Date is required.</div>
+        }
       </div>
       <div class="flex align-items-center gap-2">
         <input type="checkbox" class="w-6 h-6" formControlName="sendReminder" />

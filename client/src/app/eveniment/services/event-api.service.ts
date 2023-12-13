@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
-import { EventRequest, EventResponse } from '../models/EventRequest';
-import { BaseService } from '../../common/services/base.service';
+import { EventRequest } from '../models/EventRequest';
+import { EventResponse } from '../models/EventResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -15,5 +15,9 @@ export class EventApiService {
 
   create(newEvent: EventRequest) {
     return this.httpClient.post<EventResponse>(this.baseUrl, newEvent);
+  }
+
+  get(id: string) {
+    return this.httpClient.get<EventResponse>(`${this.baseUrl}/${id}`);
   }
 }
