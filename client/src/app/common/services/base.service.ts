@@ -1,5 +1,4 @@
 import { HttpHandlerFn, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
 
 export const BaseService: HttpInterceptorFn = (req: HttpRequest<unknown>,

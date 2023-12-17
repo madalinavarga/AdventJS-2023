@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { EventRequest } from '../models/EventRequest';
 import { EventResponse } from '../models/EventResponse';
+import { EventUsersResponse } from '../models/EventUsersResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -19,5 +20,10 @@ export class EventApiService {
 
   get(id: string) {
     return this.httpClient.get<EventResponse>(`${this.baseUrl}/${id}`);
+  }
+
+  getUsersFromAnEvent(eventId: string) {
+    let url = `${this.baseUrl}/${eventId}/users`
+    return this.httpClient.get<EventUsersResponse[]>(url);
   }
 }

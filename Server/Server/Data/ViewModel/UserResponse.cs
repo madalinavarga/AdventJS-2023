@@ -9,5 +9,7 @@ public class UserResponse
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string? Avatar { get; set; }
+
+    public Status Status { get; set; }
     public Role Role { get; set; }
 }

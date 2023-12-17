@@ -4,6 +4,7 @@
     {
         Invited,
         Declined,
-        Accepted
+        Accepted,
+        Unknown
     }
 }

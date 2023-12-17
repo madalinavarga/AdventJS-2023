@@ -11,11 +11,13 @@ public class EventsController: ControllerBase
 {
     private readonly ILogger<EventsController> _logger;
     private readonly IEventRepository _eventRepository;
+    private readonly IUserRepository _userRepository;
 
-    public EventsController(ILogger<EventsController> logger, IEventRepository eventRepository)
+    public EventsController(ILogger<EventsController> logger, IEventRepository eventRepository, IUserRepository userRepository)
     {
         _logger = logger;
         _eventRepository = eventRepository;
+        _userRepository = userRepository;
     }
 
     [HttpGet("{id}")]
@@ -62,5 +64,21 @@ public class EventsController: ControllerBase
         }
 
         return Ok(newEvent);
+    }
+
+    [HttpGet("{eventId}/users")]
+    public async Task<IActionResult> GetAllByEvent([FromRoute] Guid eventId)
+    {
+        var eventDb = await _eventRepository.Get(eventId);
+
+        if (eventDb != null)
+        {
+            var users = await _userRepository.GetUsersByEventId(eventId);
+            return Ok(users);
+        }
+        else
+        {
+            return NotFound();
+        }
     }
 }
