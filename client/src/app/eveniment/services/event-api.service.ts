@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { EventRequest } from '../models/EventRequest';
@@ -25,5 +25,16 @@ export class EventApiService {
   getUsersFromAnEvent(eventId: string) {
     let url = `${this.baseUrl}/${eventId}/users`
     return this.httpClient.get<EventUsersResponse[]>(url);
+  }
+
+  getOwnerEvents(ownerId?: string) {
+    if (ownerId === undefined || ownerId == null) {
+      return this.httpClient.get<EventResponse[]>(this.baseUrl);
+    } else {
+      let httpOptions = {
+        params: new HttpParams().set('ownerId', ownerId!)
+      };
+      return this.httpClient.get<EventResponse[]>(this.baseUrl, httpOptions);
+    }
   }
 }

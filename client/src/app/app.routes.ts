@@ -13,7 +13,7 @@ export const routes: Routes = [{
     path: 'event', component: EventComponent
 },
 {
-    path: 'dashboard', redirectTo: 'event/invite'
+    path: 'dashboard', component: DashboardComponent
 },
 {
     path: '**', redirectTo: 'auth/login'

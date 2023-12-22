@@ -34,7 +34,7 @@
         </button>
       </div>
     </form>
-    <div class="flex mt-4">
+    <div class="flex flex-row gap-x-16 mt-4">
       @for(user of invitedUsers; track user.id){
       <app-card [user]="user"> </app-card>
       }

@@ -44,6 +44,7 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddDb(builder.Configuration);
 
 var app = builder.Build();

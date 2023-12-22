@@ -12,12 +12,14 @@ public class EventsController: ControllerBase
     private readonly ILogger<EventsController> _logger;
     private readonly IEventRepository _eventRepository;
     private readonly IUserRepository _userRepository;
+    protected string _userId;  //need to fix and test
 
-    public EventsController(ILogger<EventsController> logger, IEventRepository eventRepository, IUserRepository userRepository)
+    public EventsController(ILogger<EventsController> logger, IEventRepository eventRepository, IUserRepository userRepository, IHttpContextAccessor httpContextAccessor)
     {
         _logger = logger;
         _eventRepository = eventRepository;
         _userRepository = userRepository;
+        _userId = httpContextAccessor.HttpContext.Items["UserId"]?.ToString();
     }
 
     [HttpGet("{id}")]
@@ -52,6 +54,7 @@ public class EventsController: ControllerBase
             Date = eventDetails.Date,
             CreatedAt = DateTime.UtcNow,
             SendReminder = eventDetails.SendReminder,
+            OwnerId = Guid.Parse(_userId)
         };
 
         try
@@ -80,5 +83,20 @@ public class EventsController: ControllerBase
         {
             return NotFound();
         }
+    }
+
+    [HttpGet()]
+    public async Task<IActionResult> GetAllByOwner([FromQuery] Guid? ownerId)
+    {
+        var owner = Guid.Parse(_userId);
+
+        if (ownerId != null)
+        {
+            owner = (Guid)ownerId;
+        }
+
+        var result = await _eventRepository.GetAll(owner);
+
+        return Ok(result);
     }
 }

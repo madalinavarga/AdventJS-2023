@@ -6,5 +6,7 @@ namespace Server.Data.Repositories
     {
         Task<Event> AddEvent(Event newEvent);
         Task<Event> Get(Guid  id);
+
+        Task<List<Event>>GetAll(Guid ownerId);
     }
 }

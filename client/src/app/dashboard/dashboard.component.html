@@ -1,1 +1,8 @@
-<p>dashboard works!</p>
+<div class="mx-auto flex flex-col">
+    <h1 class="text-2xl font-bold text-center my-8">Your Events:</h1>
+    <div class="flex flex-wrap -m-2 p-16">
+    @for(event of events; track event.name){
+    <app-dashboard-card [event]="event" />
+    }
+  </div>
+</div>

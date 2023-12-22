@@ -25,5 +25,11 @@ namespace Server.Data.Repositories
             var foundedEvent =  _serverDbContext.Events.FirstOrDefaultAsync(e=>e.Id==id);
             return foundedEvent;
         }
+
+        public Task<List<Event>> GetAll(Guid ownerId)
+        {
+            var events = _serverDbContext.Events.Where(e => e.OwnerId == ownerId).ToListAsync();
+            return events;
+        }
     }
 }

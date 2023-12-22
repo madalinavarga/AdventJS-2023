@@ -18,8 +18,11 @@ export class DateCountdownPipe implements PipeTransform {
     const diffInDays = Math.floor(diffInTime / (1000 * 3600 * 24));
     const weeks = Math.floor(diffInDays / 7);
     const days = diffInDays % 7;
-
-    return `${weeks} weeks and ${days} days until event`;
+    if (weeks > 0) {
+      return `${weeks} weeks and ${days} days until event`;
+    } else {
+      return `${days} days until event`;
+    }
   }
 
 }

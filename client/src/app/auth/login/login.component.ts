@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
     this._loginService.login(this.loginForm.value).subscribe({
       next: (data) => {
         localStorage.setItem("token=", data.token);
-        this._router.navigate(['/event']);
+        this._router.navigate(['/dashboard']);
       },
       error: error => {
         console.error('There was an error!', error);
