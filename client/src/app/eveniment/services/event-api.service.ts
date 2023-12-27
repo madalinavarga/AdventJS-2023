@@ -18,6 +18,12 @@ export class EventApiService {
     return this.httpClient.post<EventResponse>(this.baseUrl, newEvent);
   }
 
+  update(event: EventRequest, id: string) {
+    console.log(id)
+    const url = `${this.baseUrl}/${id}`;
+    return this.httpClient.patch<EventResponse>(url, event);
+  }
+
   get(id: string) {
     return this.httpClient.get<EventResponse>(`${this.baseUrl}/${id}`);
   }

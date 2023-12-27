@@ -8,7 +8,19 @@
     >
       {{ event?.name }}
     </div>
-    <fa-icon [icon]="editIcon" class="cursor-pointer"></fa-icon>
+    <fa-icon
+      [icon]="editIcon"
+      class="cursor-pointer"
+      (click)="handleEditEvent()"
+    ></fa-icon>
   </div>
   <div class="text-lg text-gray-600">{{ event?.date | dateCountdownPipe }}</div>
 </div>
+
+@if(isOpen){
+<app-edit-event
+  [event]="event"
+  (editedEvent)="changeEventDetails($event)"
+  (handleCloseModal)="handleEditEvent()"
+></app-edit-event>
+}

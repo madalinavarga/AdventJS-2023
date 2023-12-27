@@ -30,9 +30,7 @@ export class EventComponent implements OnInit {
   onSubmit() {
     this._eventApiService.create(this.newGroupForm.value).subscribe({
       next: data => {
-        console.log(data)
         if (data) {
-          console.log("redirect", data.id)
           this._router.navigate([`/event/${data.id}/invite`])
         }else{
           console.log("Not id");

@@ -1,0 +1,69 @@
+<div
+  class="fixed inset-0 bg-gray-800 bg-opacity-50 overflow-y-auto h-full w-full z-50"
+></div>
+
+<div
+  class="fixed top-0 right-0 h-full bg-[#2a7853] text-white rounded-l-lg shadow-xl z-50 w-full sm:w-1/3 md:w-2/5 lg:w-2/5"
+>
+  <div
+    class="flex justify-between items-start p-5 rounded-tl-lg border-b dark:border-gray-600"
+  >
+    <h3 class="text-xl font-semibold text-gray-100">EVENT DETAILS</h3>
+    <fa-icon [icon]="closeIcon" class="cursor-pointer text-white" (click)="closeModal()"></fa-icon>
+  </div>
+
+  <form
+    [formGroup]="editEventForm"
+    class="flex flex-col gap-y-6 p-6 overflow-y-auto text-black"
+    (ngSubmit)="onSubmit()"
+  >
+    <div>
+      <input
+        type="text"
+        class="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        placeholder="Event Name"
+        formControlName="name"
+        [value]="editEventForm.get('name')"
+      />
+      @if(editEventForm.get('name')?.errors &&
+      editEventForm.get('name')?.touched){
+
+      <div class="text-red-500 text-sm mt-1">Name is required</div>
+      }
+    </div>
+
+    <div>
+      <input
+        type="date"
+        class="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        formControlName="date"
+        [value]="editEventForm.get('date')"
+      />
+      @if(editEventForm.get('date')?.errors &&
+      editEventForm.get('date')?.touched){
+
+      <div class="text-red-500 text-sm mt-1">Date is required.</div>
+      }
+    </div>
+
+    <div class="flex items-center gap-2">
+      <input
+        type="checkbox"
+        class="w-6 h-6 border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500"
+        formControlName="sendReminder"
+        [value]="editEventForm.get('sendReminder')"
+      />
+      <label for="sendReminder" class="text-lg"
+        >SEND OUT A REMINDER BEFORE EVENT</label
+      >
+    </div>
+
+    <button
+      type="submit"
+      class="bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+      [disabled]="!editEventForm.valid"
+    >
+      UPDATE
+    </button>
+  </form>
+</div>

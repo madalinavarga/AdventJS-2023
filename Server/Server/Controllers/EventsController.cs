@@ -44,10 +44,37 @@ public class EventsController: ControllerBase
         }
     }
 
+    [HttpPatch( "{id}")]
+    public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] EventRequestModel eventDetails)
+    {
+        var foundedEvent = await _eventRepository.Get(id);
+
+        if (foundedEvent == null)
+        {
+            return NotFound();
+        }
+
+        foundedEvent.UpdatedAt = DateTime.UtcNow;
+        foundedEvent.Name = eventDetails.Name;
+        foundedEvent.Date = eventDetails.Date;
+        foundedEvent.SendReminder = eventDetails.SendReminder;
+
+
+        try
+        {
+            await _eventRepository.Update(foundedEvent);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ex.ToString());
+        }
+
+        return Ok(foundedEvent);
+    }
+
     [HttpPost]
     public async Task<IActionResult> CreateEvent([FromBody] EventRequestModel eventDetails)
     {
-        //TODO add owner
         var newEvent = new Event
         {
             Name = eventDetails.Name,

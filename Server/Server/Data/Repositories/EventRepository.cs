@@ -20,6 +20,12 @@ namespace Server.Data.Repositories
             return createdEvent.Entity;
         }
 
+        public  async Task Update(Event eventDetails)
+        {
+            _serverDbContext.Events.Update(eventDetails);
+            await  _serverDbContext.SaveChangesAsync();
+        }
+
         public Task<Event> Get(Guid id)
         {
             var foundedEvent =  _serverDbContext.Events.FirstOrDefaultAsync(e=>e.Id==id);

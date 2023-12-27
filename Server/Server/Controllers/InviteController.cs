@@ -14,6 +14,7 @@ public class InviteController : ControllerBase
     private readonly  IInviteRepository _inviteRepository;
     private readonly IEventRepository _eventRepository;
     private readonly  IUserRepository _userRepository;
+    protected string userId => HttpContext.Items["UserId"]?.ToString();
 
     public InviteController(ILogger<InviteController> logger, IInviteRepository inviteRepository, IEventRepository eventRepository, IUserRepository userRepository)
     {
@@ -30,6 +31,13 @@ public class InviteController : ControllerBase
         var user = await _userRepository.GetByEmail(inviteDetails.Email);
         if (checkedEvent != null && user != null)
         {
+            var existingInvite = await _inviteRepository.GetInvite(user.Id, checkedEvent.Id);
+
+            if (existingInvite != null)
+            {
+                return Conflict();
+            }
+
             var invite = new Invite
             {
                 EventId = inviteDetails.EventId,
@@ -44,5 +52,12 @@ public class InviteController : ControllerBase
         {
             return NotFound();
         }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var invitations = await _inviteRepository.GetInvitations(Guid.Parse(userId));
+        return Ok(invitations);
     }
 }

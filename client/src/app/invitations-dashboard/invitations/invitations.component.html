@@ -1,0 +1,11 @@
+<div class="flex">
+  <div class="md:w-2/4 lg:w-2/4 flex flex-col mt-28 cursor-pointer">
+    @for(invite of invitations; track invite.id){
+    <span>-> {{ invite.eventId }}</span>
+    }
+  </div>
+  <div class="md:w-2/4 lg:w-2/4">
+
+    Invite 1: accept or not // card
+  </div>
+</div>

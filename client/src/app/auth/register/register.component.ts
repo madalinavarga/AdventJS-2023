@@ -27,10 +27,8 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.registerForm.value);
     this._registerApiService.register(this.registerForm.value).subscribe({
       next: data => {
-        console.log("OK", data);
         this._router.navigate(['/auth/login']);
       },
       error: error => {

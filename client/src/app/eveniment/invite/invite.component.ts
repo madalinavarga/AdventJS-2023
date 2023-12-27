@@ -59,7 +59,6 @@ export class InviteComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log("CLick")
     if (this.inviteForm.valid) {
       let inviteRequest: InviteEventRequest = {
         "name": this.inviteForm.value["name"],
