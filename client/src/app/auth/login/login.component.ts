@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   public loginForm!: FormGroup;
 
-  constructor(private _fb: FormBuilder, private _loginService: LoginApiService, private _router: Router) {
+  constructor(private _fb: FormBuilder, private loginService: LoginApiService, private _router: Router) {
   }
 
   ngOnInit(): void {
@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this._loginService.login(this.loginForm.value).subscribe({
+    this.loginService.login(this.loginForm.value).subscribe({
       next: (data) => {
         localStorage.setItem("token=", data.token);
         this._router.navigate(['/dashboard']);

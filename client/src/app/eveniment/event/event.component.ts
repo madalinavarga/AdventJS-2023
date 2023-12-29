@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 export class EventComponent implements OnInit {
   newGroupForm!: FormGroup
 
-  constructor(private _formBuilder: FormBuilder, private _eventApiService: EventApiService, private _router: Router) { }
+  constructor(private _formBuilder: FormBuilder, private eventApiService: EventApiService, private _router: Router) { }
 
   ngOnInit(): void {
     this.newGroupForm = this._formBuilder.group({
@@ -28,11 +28,11 @@ export class EventComponent implements OnInit {
   }
 
   onSubmit() {
-    this._eventApiService.create(this.newGroupForm.value).subscribe({
+    this.eventApiService.create(this.newGroupForm.value).subscribe({
       next: data => {
         if (data) {
           this._router.navigate([`/event/${data.id}/invite`])
-        }else{
+        } else {
           console.log("Not id");
         }
       },

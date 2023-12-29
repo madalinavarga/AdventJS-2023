@@ -1,0 +1,25 @@
+@if(eventDetails){
+<div class="flex flex-col h-full bg-green-400 text-black text-3xl p-8">
+  <span class="text-4xl font-bold my-4">Event Details</span>
+  <h1 class="my-2">Name: {{ eventDetails.name }}</h1>
+  <h1 class="my-1">Date: {{ eventDetails.date | date: 'dd MMM yyyy' }}</h1>
+  @if(inviteDetails && inviteDetails.status){
+  <span class="my-3"> Status: {{ inviteDetails.status | convertStatus }} </span>
+  }
+  <div class="flex space-x-4 my-4">
+    <button
+      class="bg-green-600 rounded-full font-bold py-3 px-6 hover:bg-green-700 transition duration-300"
+    >
+      Accept
+    </button>
+    <button
+      class="bg-red-600 font-bold py-3 px-6 rounded-full hover:bg-red-700 transition duration-300"
+    >
+      Reject
+    </button>
+  </div>
+</div>
+
+} @else{
+<span class="text-3xl">Select an Event</span>
+}

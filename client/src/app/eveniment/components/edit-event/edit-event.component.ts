@@ -19,7 +19,7 @@ export class EditEventComponent implements OnInit {
   @Input() event: EventResponse | null = null;
   @Output() editedEvent = new EventEmitter<EventResponse>();
 
-  constructor(private _fb: FormBuilder, private _eventApiService: EventApiService) { }
+  constructor(private _fb: FormBuilder, private eventApiService: EventApiService) { }
 
   ngOnInit(): void {
     this.editEventForm = new FormGroup({
@@ -35,7 +35,7 @@ export class EditEventComponent implements OnInit {
 
   onSubmit() {
     if (this.editEventForm.valid) {
-      this._eventApiService.update(this.editEventForm.value, this.event?.id!).subscribe({
+      this.eventApiService.update(this.editEventForm.value, this.event?.id!).subscribe({
         next: data => {
           this.handleCloseModal.emit();
           this.editedEvent.emit(data as EventResponse);

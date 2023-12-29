@@ -1,11 +1,20 @@
-<div class="flex">
-  <div class="md:w-2/4 lg:w-2/4 flex flex-col mt-28 cursor-pointer">
+<div class="flex align-items-start">
+  <div class="md:w-1/4 lg:w-1/4 flex flex-col mt-28 cursor-pointer p-4">
     @for(invite of invitations; track invite.id){
-    <span>-> {{ invite.eventId }}</span>
+    <div
+      class="p-4 my-2 bg-yellow-100 border border-beige rounded-lg shadow-lg transition duration-300 ease-in-out hover:bg-yellow-200" (click)="handleInviteDetails(invite)"
+    >
+      <fa-icon [icon]="barsIcon"></fa-icon>
+      <span class="text-3xl">
+        {{ invite.name }}
+      </span>
+    </div>
     }
   </div>
-  <div class="md:w-2/4 lg:w-2/4">
-
-    Invite 1: accept or not // card
+  <div class="md:w-3/4 lg:w-3/4 h-screen">
+    <app-invite-card
+      [inviteDetails]="inviteDetails"
+      [eventDetails]="eventDetails"
+    ></app-invite-card>
   </div>
 </div>

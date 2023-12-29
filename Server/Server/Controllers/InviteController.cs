@@ -42,10 +42,18 @@ public class InviteController : ControllerBase
             {
                 EventId = inviteDetails.EventId,
                 UserId = user.Id,
-                Status = Status.Invited
+                Status = Status.Invited,
+                Name = inviteDetails.Name,
             };
+            try
+            {
+                await _inviteRepository.CreateInvitation(invite);
+            }
+            catch (Exception ex)
+            {
+                return Problem();
+            }
 
-            await _inviteRepository.CreateInvitation(invite);
             return Ok();
         }
         else

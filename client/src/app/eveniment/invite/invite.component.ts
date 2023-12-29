@@ -24,7 +24,7 @@ export class InviteComponent implements OnInit {
   invitedUsers: EventUsersResponse[] = [];
 
 
-  constructor(private _formBuilder: FormBuilder, private _activeRoute: ActivatedRoute, private _eventService: EventApiService, private _inviteService: InviteApiService) {
+  constructor(private _formBuilder: FormBuilder, private _activeRoute: ActivatedRoute, private eventService: EventApiService, private _inviteService: InviteApiService) {
 
   }
 
@@ -38,7 +38,7 @@ export class InviteComponent implements OnInit {
       this.eventId = params['id'];
     })
 
-    this._eventService.get(this.eventId).subscribe({
+    this.eventService.get(this.eventId).subscribe({
       next: data => {
         this.eveniment = data;
       },
@@ -47,7 +47,7 @@ export class InviteComponent implements OnInit {
       }
     })
 
-    this._eventService.getUsersFromAnEvent(this.eventId).subscribe({
+    this.eventService.getUsersFromAnEvent(this.eventId).subscribe({
       next: users => {
         this.invitedUsers = users;
       },
@@ -68,6 +68,14 @@ export class InviteComponent implements OnInit {
 
       this._inviteService.createInvite(inviteRequest).subscribe({
         next: (data) => {
+          this.eventService.getUsersFromAnEvent(this.eventId).subscribe({
+            next: users => {
+              this.invitedUsers = users;
+            },
+            error: error => {
+              console.error('There was an error!', error);
+            }
+          })
         },
         error: (err) => { }
       })
