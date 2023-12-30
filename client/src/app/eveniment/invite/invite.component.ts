@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute } from '@angular/router';
 import { EventResponse } from '../models/EventRequest';
 import { EventApiService } from '../services/event-api.service';
-import { DateCountdownPipe } from '../utils/date-countdown-pipe.pipe';
+import { DateCountdownPipe } from '../../common/utils/date-countdown-pipe.pipe';
 import { UpperCasePipe } from '@angular/common';
 import { InviteApiService } from '../services/invite-api.service';
 import { InviteEventRequest } from '../models/InviteEventRequest';

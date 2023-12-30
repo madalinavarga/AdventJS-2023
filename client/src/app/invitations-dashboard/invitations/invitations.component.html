@@ -2,12 +2,16 @@
   <div class="md:w-1/4 lg:w-1/4 flex flex-col mt-28 cursor-pointer p-4">
     @for(invite of invitations; track invite.id){
     <div
-      class="p-4 my-2 bg-yellow-100 border border-beige rounded-lg shadow-lg transition duration-300 ease-in-out hover:bg-yellow-200" (click)="handleInviteDetails(invite)"
+      class="p-4 my-2 bg-yellow-100 border border-beige rounded-lg shadow-lg transition duration-300 ease-in-out hover:bg-yellow-200 flex gap-4 items-center"
+      (click)="handleInviteDetails(invite)"
     >
       <fa-icon [icon]="barsIcon"></fa-icon>
-      <span class="text-3xl">
+      <span class="text-3xl flex-1">
         {{ invite.name }}
       </span>
+      <app-status-icon
+        [inviteStatus]="invite?.status"
+      ></app-status-icon>
     </div>
     }
   </div>

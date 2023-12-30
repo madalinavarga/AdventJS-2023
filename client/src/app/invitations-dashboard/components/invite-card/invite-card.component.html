@@ -1,21 +1,25 @@
 @if(eventDetails){
-<div class="flex flex-col h-full bg-green-400 text-black text-3xl p-8">
-  <span class="text-4xl font-bold my-4">Event Details</span>
+<div
+  class="flex flex-col h-full bg-green-400 text-black text-3xl p-8 items-center gap-4"
+>
+  <span class="text-4xl font-bold my-4">- You are invited to -</span>
   <h1 class="my-2">Name: {{ eventDetails.name }}</h1>
-  <h1 class="my-1">Date: {{ eventDetails.date | date: 'dd MMM yyyy' }}</h1>
-  @if(inviteDetails && inviteDetails.status){
-  <span class="my-3"> Status: {{ inviteDetails.status | convertStatus }} </span>
+  <h1 class="my-1">Date: {{ eventDetails.date | date : "dd MMM yyyy" }}</h1>
+  @if(inviteDetails){
+  <h1>Status: {{ inviteDetails.status | convertStatus }}</h1>
   }
   <div class="flex space-x-4 my-4">
     <button
       class="bg-green-600 rounded-full font-bold py-3 px-6 hover:bg-green-700 transition duration-300"
+      (click)="handleInitationStatus(2)"
     >
-      Accept
+      <fa-icon [icon]="acceptIcon"></fa-icon>
     </button>
     <button
       class="bg-red-600 font-bold py-3 px-6 rounded-full hover:bg-red-700 transition duration-300"
+      (click)="handleInitationStatus(1)"
     >
-      Reject
+      <fa-icon [icon]="rejectIcon"></fa-icon>
     </button>
   </div>
 </div>

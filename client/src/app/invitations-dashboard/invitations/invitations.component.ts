@@ -6,11 +6,12 @@ import { EventResponse } from '../../eveniment/models/EventResponse';
 import { InviteCardComponent } from '../components/invite-card/invite-card.component';
 import { faBarsStaggered } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { StatusIconComponent } from '../../common/components/status-icon/status-icon.component';
 
 @Component({
   selector: 'app-invitations',
   standalone: true,
-  imports: [InviteCardComponent, FontAwesomeModule],
+  imports: [InviteCardComponent, FontAwesomeModule, StatusIconComponent],
   templateUrl: './invitations.component.html',
   styleUrl: './invitations.component.css'
 })

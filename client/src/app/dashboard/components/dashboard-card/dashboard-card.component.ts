@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { EventResponse } from '../../../eveniment/models/EventResponse';
-import { DateCountdownPipe } from '../../../eveniment/utils/date-countdown-pipe.pipe';
+import { DateCountdownPipe } from '../../../common/utils/date-countdown-pipe.pipe';
 import { Router } from '@angular/router';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';

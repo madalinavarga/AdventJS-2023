@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faBars, faClose } from '@fortawesome/free-solid-svg-icons';
 
@@ -14,12 +14,17 @@ export class SideMenuComponent {
   isOpen: boolean = false;
   menuIcon = faBars;
   closeIcon = faClose;
-  constructor() {
+  constructor(private router: Router) {
 
   }
 
   handleSideMenu() {
     this.isOpen = !this.isOpen
+  }
+
+  logout() {
+    localStorage.removeItem("token=");
+    this.router.navigate(['/auth/login']);
   }
 
 }
