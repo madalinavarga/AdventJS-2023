@@ -50,7 +50,7 @@ export class StatusIconComponent implements OnInit {
         this.iconStyle += ' text-green-500 p-4 text-xl'
         break;
       default:
-        this.iconStyle += ' text-gray-500 p-4 text-xl '
+        this.iconStyle += ' text-gray-500 p-4 text-xl'
     }
   }
 }

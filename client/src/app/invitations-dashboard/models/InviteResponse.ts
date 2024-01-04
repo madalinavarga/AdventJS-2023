@@ -4,3 +4,5 @@ export interface InvitationsResponse {
     status: number,
     name: string
 }
+
+export type PartialInvitationUpdate= Partial<InvitationsResponse>;

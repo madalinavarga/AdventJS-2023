@@ -6,29 +6,7 @@
     {{ user.firstName | getSubstring : 1 | uppercase }}.
     {{ user.lastName | getSubstring : 1 | uppercase }}.
   </div>
-  @switch(user.status){
-   @case (0) {
-    <fa-icon
-    [icon]="faCircleQuestion"
-    class="text-gray-500 p-4 text-xl absolute -left-4 -bottom-4"
-  ></fa-icon>
-   }
-   @case (1) {
-    <fa-icon
-    [icon]="faCircleXmark"
-    class="text-red-500 p-4 text-xl absolute -left-4 -bottom-4"
-  ></fa-icon>
-   }
-   @case (2) {
-    <fa-icon
-    [icon]="faCircleCheck"
-    class="text-green-500 p-4 text-xl absolute -left-4 -bottom-4"
-  ></fa-icon>
-   }
-
-  }
-
-
+  <app-status-icon [inviteStatus]="user.status"[extraStyle]="'absolute -left-4 -bottom-4'"  ></app-status-icon>
   <div class="flex flex-col ml-4">
     <span class="text-2xl">{{ user.firstName }}</span>
     <span>State: {{ user.status | convertStatus }}</span>

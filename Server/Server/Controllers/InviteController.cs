@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Server.Controllers.ViewModel.Invite;
 using Server.Data;
 using Server.Data.Entities;
@@ -15,13 +16,15 @@ public class InviteController : ControllerBase
     private readonly IEventRepository _eventRepository;
     private readonly  IUserRepository _userRepository;
     protected string userId => HttpContext.Items["UserId"]?.ToString();
+    private readonly IMapper _mapper;
 
-    public InviteController(ILogger<InviteController> logger, IInviteRepository inviteRepository, IEventRepository eventRepository, IUserRepository userRepository)
+    public InviteController(ILogger<InviteController> logger, IInviteRepository inviteRepository, IEventRepository eventRepository, IUserRepository userRepository, IMapper mapper)
     {
-        _logger= logger;
-        _inviteRepository=inviteRepository;
-        _eventRepository=eventRepository;
-        _userRepository=userRepository;
+        _logger = logger;
+        _inviteRepository = inviteRepository;
+        _eventRepository = eventRepository;
+        _userRepository = userRepository;
+        _mapper = mapper;
     }
 
     [HttpPost()]
@@ -67,5 +70,30 @@ public class InviteController : ControllerBase
     {
         var invitations = await _inviteRepository.GetInvitations(Guid.Parse(userId));
         return Ok(invitations);
+    }
+
+    [HttpPatch("{id}")]
+    public async Task<IActionResult> Update([FromBody] InviteUpdate invite, [FromRoute] Guid id)
+    {
+        var dbInvite = await _inviteRepository.GetById(id);
+        if (dbInvite != null)
+        {
+           var updated = _mapper.Map(invite, dbInvite);
+            try
+            {
+                await _inviteRepository.Update(updated);
+            }
+            catch (Exception e)
+            {
+                return Problem();
+            }
+
+        }
+        else
+        {
+            return NotFound();
+        }
+
+        return Ok();
     }
 }

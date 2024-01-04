@@ -1,6 +1,6 @@
 <div class="flex align-items-start">
   <div class="md:w-1/4 lg:w-1/4 flex flex-col mt-28 cursor-pointer p-4">
-    @for(invite of invitations; track invite.id){
+    @for(invite of invitations$ | async; track invite.id){
     <div
       class="p-4 my-2 bg-yellow-100 border border-beige rounded-lg shadow-lg transition duration-300 ease-in-out hover:bg-yellow-200 flex gap-4 items-center"
       (click)="handleInviteDetails(invite)"

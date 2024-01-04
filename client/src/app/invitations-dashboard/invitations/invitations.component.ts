@@ -7,16 +7,18 @@ import { InviteCardComponent } from '../components/invite-card/invite-card.compo
 import { faBarsStaggered } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { StatusIconComponent } from '../../common/components/status-icon/status-icon.component';
+import { Observable, of } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-invitations',
   standalone: true,
-  imports: [InviteCardComponent, FontAwesomeModule, StatusIconComponent],
+  imports: [InviteCardComponent, FontAwesomeModule, StatusIconComponent, CommonModule],
   templateUrl: './invitations.component.html',
   styleUrl: './invitations.component.css'
 })
 export class InvitationsComponent implements OnInit {
-  invitations: InvitationsResponse[] = [];
+  invitations$: Observable<InvitationsResponse[]> = of([]);
   eventDetails: EventResponse | null = null;
   inviteDetails: InvitationsResponse | null = null;
   barsIcon = faBarsStaggered
@@ -26,14 +28,7 @@ export class InvitationsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.inviteApiService.getAll().subscribe({
-      next: (data) => {
-        this.invitations = data;
-      },
-      error: err => {
-        console.error(err)
-      }
-    })
+    this.invitations$=this.inviteApiService.getAll();
   }
 
   handleInviteDetails(invite: InvitationsResponse) {

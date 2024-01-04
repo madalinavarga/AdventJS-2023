@@ -47,6 +47,8 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddDb(builder.Configuration);
 
+builder.Services.AddAutoMapper(typeof(Program));
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
