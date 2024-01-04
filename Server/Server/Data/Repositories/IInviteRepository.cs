@@ -12,4 +12,5 @@ namespace Server.Data.Repositories;
         Task<Invite> GetById(Guid id);
 
         Task Update(Invite inviteDetails);
+        Task Delete(Guid eventId, Guid userId);
     }

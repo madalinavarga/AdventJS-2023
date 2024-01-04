@@ -24,7 +24,6 @@ export class InviteComponent implements OnInit {
   eveniment$: Observable<EventResponse> = of();
   invitedUsers$: Observable<EventUsersResponse[]> = of([]);
 
-
   constructor(private _formBuilder: FormBuilder, private _activeRoute: ActivatedRoute, private eventService: EventApiService, private _inviteService: InviteApiService) {
 
   }
@@ -40,7 +39,6 @@ export class InviteComponent implements OnInit {
     })
 
     this.eveniment$ = this.eventService.get(this.eventId);
-
     this.invitedUsers$ = this.eventService.getUsersFromAnEvent(this.eventId);
   }
 
@@ -55,6 +53,7 @@ export class InviteComponent implements OnInit {
       this._inviteService.createInvite(inviteRequest).subscribe({
         next: (data) => {
           this.invitedUsers$ = this.eventService.getUsersFromAnEvent(this.eventId);
+          this.inviteForm.reset({name:"Name", email:"Email"});
         },
         error: (err) => { }
       })
@@ -65,4 +64,7 @@ export class InviteComponent implements OnInit {
     return this.inviteForm.controls;
   }
 
+  refetchInvites(){
+    this.invitedUsers$ = this.eventService.getUsersFromAnEvent(this.eventId);
+  }
 }

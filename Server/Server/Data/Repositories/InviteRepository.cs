@@ -45,4 +45,15 @@ public class InviteRepository : IInviteRepository
         var result = _context.Invite.Update(inviteDetails);
         await _context.SaveChangesAsync();
     }
+
+    public async  Task Delete(Guid eventId, Guid userId)
+    {
+        var invite = await _context.Invite.FirstOrDefaultAsync(invite => invite.EventId == eventId && invite.UserId == userId);
+
+        if (invite != null)
+        {
+            _context.Remove(invite);
+            _context.SaveChanges();
+        }
+    }
 }

@@ -96,4 +96,19 @@ public class InviteController : ControllerBase
 
         return Ok();
     }
+
+    [HttpDelete]
+    public async Task<IActionResult> RemoveInvite([FromQuery] Guid eventId, [FromQuery] Guid userId)
+    {
+        try
+        {
+            await _inviteRepository.Delete(eventId, userId);
+        }
+        catch (Exception e)
+        {
+            return Problem();
+        }
+
+        return Ok();
+    }
 }

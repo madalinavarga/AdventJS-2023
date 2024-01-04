@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { InviteEventRequest } from '../models/InviteEventRequest';
@@ -14,5 +14,13 @@ export class InviteApiService {
 
   createInvite(inviteRequest: InviteEventRequest) {
     return this.httpClient.post(this.baseUrl, inviteRequest);
+  }
+
+  removeInvite(eventId: string, userId: string) {
+    let params = new HttpParams()
+      .set('eventId', eventId)
+      .set('userId', userId);
+
+    return this.httpClient.delete(this.baseUrl, { params });
   }
 }
