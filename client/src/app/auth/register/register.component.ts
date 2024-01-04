@@ -1,18 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RegisterApiService } from './services/register-api.service';
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
   registerForm!: FormGroup
+  unsubscribe = new Subject<void>();
   constructor(private _formBuilder: FormBuilder, private _registerApiService: RegisterApiService, private _router: Router) {
 
   }
+  ngOnDestroy(): void {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+  }
+
   ngOnInit(): void {
     this.registerForm = this._formBuilder.group({
       email: ['Email', [Validators.required, Validators.email]],
@@ -27,7 +34,7 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    this._registerApiService.register(this.registerForm.value).subscribe({
+    this._registerApiService.register(this.registerForm.value).pipe(takeUntil(this.unsubscribe)).subscribe({
       next: data => {
         this._router.navigate(['/auth/login']);
       },
@@ -35,7 +42,6 @@ export class RegisterComponent implements OnInit {
         console.error('There was an error!', error);
       }
     })
-
   }
 
 }

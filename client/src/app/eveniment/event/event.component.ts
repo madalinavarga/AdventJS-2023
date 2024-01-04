@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EventApiService } from '../services/event-api.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-event',
@@ -10,10 +11,15 @@ import { Router } from '@angular/router';
   templateUrl: './event.component.html',
   styleUrl: './event.component.css'
 })
-export class EventComponent implements OnInit {
+export class EventComponent implements OnInit, OnDestroy {
   newGroupForm!: FormGroup
+  unsubscribe :Subscription =new Subscription();
 
   constructor(private _formBuilder: FormBuilder, private eventApiService: EventApiService, private _router: Router) { }
+  
+  ngOnDestroy(): void {
+    this.unsubscribe.unsubscribe();
+  }
 
   ngOnInit(): void {
     this.newGroupForm = this._formBuilder.group({
@@ -28,7 +34,7 @@ export class EventComponent implements OnInit {
   }
 
   onSubmit() {
-    this.eventApiService.create(this.newGroupForm.value).subscribe({
+    this.unsubscribe = this.eventApiService.create(this.newGroupForm.value).subscribe({
       next: data => {
         if (data) {
           this._router.navigate([`/event/${data.id}/invite`])

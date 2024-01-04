@@ -1,17 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginApiService } from './services/login-api.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   public loginForm!: FormGroup;
+  private loginSubscription: Subscription = new Subscription();
 
   constructor(private _fb: FormBuilder, private loginService: LoginApiService, private _router: Router) {
+  }
+
+  ngOnDestroy(): void {
+    this.loginSubscription.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -22,7 +28,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.loginService.login(this.loginForm.value).subscribe({
+    this.loginSubscription = this.loginService.login(this.loginForm.value).subscribe({
       next: (data) => {
         localStorage.setItem("token=", data.token);
         this._router.navigate(['/dashboard']);

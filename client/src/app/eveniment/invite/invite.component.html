@@ -2,12 +2,12 @@
   class="bg-[url('/assets/invite.png')] h-full bg-cover flex flex-col place-items-start"
 >
   <div class="ml-[30%]">
-    @if(eveniment){
+   <div *ngIf ="eveniment$ | async as e" >
     <div class="flex flex-col text-2xl text-white mt-32">
-      <span>{{ eveniment.date | dateCountdownPipe }}</span>
-      <div class="text-6xl">{{ eveniment.name | uppercase }}</div>
+      <span>{{ e.date | dateCountdownPipe }}</span>
+      <div class="text-6xl">{{ e.name | uppercase }}</div>
     </div>
-    }
+  </div>
     <form [formGroup]="inviteForm" (ngSubmit)="onSubmit()" class="text-3xl">
       <span class="text-lg text-white">INVITE A FRIEND OR A FAMILY MEMBER</span>
       <div class="flex flex-row gap-2 bg-green-600 p-4">
@@ -35,7 +35,7 @@
       </div>
     </form>
     <div class="flex flex-row gap-x-16 mt-4">
-      @for(user of invitedUsers; track user.id){
+      @for(user of invitedUsers$ | async; track user.id){
       <app-card [user]="user"> </app-card>
       }
     </div>

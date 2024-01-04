@@ -18,7 +18,7 @@
   <div class="md:w-3/4 lg:w-3/4 h-screen">
     <app-invite-card
       [inviteDetails]="inviteDetails"
-      [eventDetails]="eventDetails"
+      [eventDetails]="eventDetails$ | async"
     ></app-invite-card>
   </div>
 </div>

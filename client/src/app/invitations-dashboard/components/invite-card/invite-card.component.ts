@@ -40,7 +40,5 @@ export class InviteCardComponent {
         error: err => console.error('An error occurred while trying to update the status of the invitation')
       })
     }
-
-    //change status api call
   }
 }

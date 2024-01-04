@@ -19,27 +19,18 @@ import { CommonModule } from '@angular/common';
 })
 export class InvitationsComponent implements OnInit {
   invitations$: Observable<InvitationsResponse[]> = of([]);
-  eventDetails: EventResponse | null = null;
+  eventDetails$: Observable<EventResponse> = of();
   inviteDetails: InvitationsResponse | null = null;
   barsIcon = faBarsStaggered
 
-  constructor(private inviteApiService: InviteApiService, private eventApiService: EventApiService) {
-
-  }
+  constructor(private inviteApiService: InviteApiService, private eventApiService: EventApiService) {  }
 
   ngOnInit(): void {
-    this.invitations$=this.inviteApiService.getAll();
+    this.invitations$ = this.inviteApiService.getAll();
   }
 
   handleInviteDetails(invite: InvitationsResponse) {
     this.inviteDetails = invite;
-    this.eventApiService.get(invite.eventId).subscribe({
-      next: data => {
-        this.eventDetails = data;
-      },
-      error: err => {
-        console.error(err)
-      }
-    });
+    this.eventDetails$ = this.eventApiService.get(invite.eventId);
   }
 }

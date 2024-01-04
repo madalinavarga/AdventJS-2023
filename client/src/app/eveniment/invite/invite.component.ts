@@ -4,24 +4,25 @@ import { ActivatedRoute } from '@angular/router';
 import { EventResponse } from '../models/EventRequest';
 import { EventApiService } from '../services/event-api.service';
 import { DateCountdownPipe } from '../../common/utils/date-countdown-pipe.pipe';
-import { UpperCasePipe } from '@angular/common';
+import { CommonModule, UpperCasePipe } from '@angular/common';
 import { InviteApiService } from '../services/invite-api.service';
 import { InviteEventRequest } from '../models/InviteEventRequest';
 import { CardComponent } from '../components/card/card.component';
 import { EventUsersResponse } from '../models/EventUsersResponse';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-invite',
   standalone: true,
-  imports: [ReactiveFormsModule, DateCountdownPipe, UpperCasePipe, CardComponent],
+  imports: [ReactiveFormsModule, DateCountdownPipe, UpperCasePipe, CardComponent, CommonModule],
   templateUrl: './invite.component.html',
   styleUrl: './invite.component.css'
 })
 export class InviteComponent implements OnInit {
   inviteForm!: FormGroup;
   eventId: string = '';
-  eveniment!: EventResponse;
-  invitedUsers: EventUsersResponse[] = [];
+  eveniment$: Observable<EventResponse> = of();
+  invitedUsers$: Observable<EventUsersResponse[]> = of([]);
 
 
   constructor(private _formBuilder: FormBuilder, private _activeRoute: ActivatedRoute, private eventService: EventApiService, private _inviteService: InviteApiService) {
@@ -38,24 +39,9 @@ export class InviteComponent implements OnInit {
       this.eventId = params['id'];
     })
 
-    this.eventService.get(this.eventId).subscribe({
-      next: data => {
-        this.eveniment = data;
-      },
-      error: error => {
-        console.error('There was an error!', error);
-      }
-    })
+    this.eveniment$ = this.eventService.get(this.eventId);
 
-    this.eventService.getUsersFromAnEvent(this.eventId).subscribe({
-      next: users => {
-        this.invitedUsers = users;
-      },
-      error: error => {
-        console.error('There was an error!', error);
-      }
-
-    })
+    this.invitedUsers$ = this.eventService.getUsersFromAnEvent(this.eventId);
   }
 
   onSubmit() {
@@ -68,14 +54,7 @@ export class InviteComponent implements OnInit {
 
       this._inviteService.createInvite(inviteRequest).subscribe({
         next: (data) => {
-          this.eventService.getUsersFromAnEvent(this.eventId).subscribe({
-            next: users => {
-              this.invitedUsers = users;
-            },
-            error: error => {
-              console.error('There was an error!', error);
-            }
-          })
+          this.invitedUsers$ = this.eventService.getUsersFromAnEvent(this.eventId);
         },
         error: (err) => { }
       })
