@@ -5,30 +5,29 @@ import { EventResponse } from '../eveniment/models/EventResponse';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faAdd } from '@fortawesome/free-solid-svg-icons';
 import { Route, Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [DashboardCardComponent, FontAwesomeModule],
+  imports: [DashboardCardComponent, FontAwesomeModule, CommonModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent implements OnInit {
-  events: EventResponse[] = [];
+  events$: Observable<EventResponse[]> = of([]);
   addIcon = faAdd;
 
   constructor(private eventApiService: EventApiService, private router: Router) {
   }
 
   ngOnInit(): void {
-    this.eventApiService.getOwnerEvents().subscribe({
-      next: (response) => {
-        this.events = response;
-      },
-      error: (err) => {
-        console.log(err)
-      }
-    })
+    this.events$ = this.eventApiService.getOwnerEvents();
+  }
+
+  refetch() {
+    this.events$ = this.eventApiService.getOwnerEvents();
   }
 
   handleAddEvent() {

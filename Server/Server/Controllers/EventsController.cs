@@ -126,4 +126,19 @@ public class EventsController: ControllerBase
 
         return Ok(result);
     }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete([FromRoute] Guid id)
+    {
+        try
+        {
+            await _eventRepository.Delete(id);
+        }
+        catch (Exception ex)
+        {
+            return Problem();
+        }
+
+        return Ok();
+    }
 }

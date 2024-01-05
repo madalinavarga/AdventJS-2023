@@ -9,5 +9,6 @@ namespace Server.Data.Repositories
         Task<Event> Get(Guid  id);
 
         Task<List<Event>>GetAll(Guid ownerId);
+        Task Delete(Guid id);
     }
 }

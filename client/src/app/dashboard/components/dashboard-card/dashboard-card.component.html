@@ -8,11 +8,18 @@
     >
       {{ event?.name }}
     </div>
-    <fa-icon
-      [icon]="editIcon"
-      class="cursor-pointer"
-      (click)="handleEditEvent()"
-    ></fa-icon>
+    <div class="flex flex-row gap-1 align-items-center">
+      <fa-icon
+        [icon]="editIcon"
+        class="cursor-pointer"
+        (click)="handleEditEvent()"
+      ></fa-icon>
+      <fa-icon
+        [icon]="deleteIcon"
+        class="cursor-pointer text-gray-400 hover:text-black"
+        (click)="handleRemoveEvent()"
+      ></fa-icon>
+    </div>
   </div>
   <div class="text-lg text-gray-600">{{ event?.date | dateCountdownPipe }}</div>
 </div>

@@ -43,4 +43,8 @@ export class EventApiService {
       return this.httpClient.get<EventResponse[]>(this.baseUrl, httpOptions);
     }
   }
+
+  remove(eventId:string){
+    return this.httpClient.delete(`${this.baseUrl}/${eventId}`);
+  }
 }

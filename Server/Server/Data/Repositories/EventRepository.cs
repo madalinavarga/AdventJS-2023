@@ -37,5 +37,16 @@ namespace Server.Data.Repositories
             var events = _serverDbContext.Events.Where(e => e.OwnerId == ownerId).ToListAsync();
             return events;
         }
+
+        public async Task Delete(Guid id)
+        {
+            var ev = await _serverDbContext.Events.FirstOrDefaultAsync(e => e.Id == id);
+
+            if (ev != null)
+            {
+                _serverDbContext.Events.Remove(ev);
+                _serverDbContext.SaveChanges();
+            }
+        }
     }
 }
