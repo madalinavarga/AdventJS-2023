@@ -30,7 +30,14 @@ export class MyWishlistComponent implements OnInit {
 
     this.wishApiService.get().subscribe({
       next: (data) => {
-        console.log("Data: ", data)
+        if(data){
+          Object.entries(data).forEach(([key,value]) => {
+            this.items.push(this.formBuilder.group({
+              name: [value.name, Validators.required],
+              url: [value.url, Validators.required]
+            }));
+          });
+        }
       }
     })
   }
