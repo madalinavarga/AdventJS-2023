@@ -1,0 +1,94 @@
+<div
+  class="bg-[url('/assets/bg_invite.png')] h-full bg-cover grid justify-items-center"
+>
+  <div class="flex flex-col gap-4 mt-32">
+    <h1 class="text-6xl text-white">WISH LIST</h1>
+    <h1 class="text-4xl text-white">MAKE YOUR LIST AND CHECK IT TWICE</h1>
+    <form
+      [formGroup]="wishlistForm"
+      (ngSubmit)="onSubmit()"
+      class="flex flex-col gap-2 m-2 place-items-start"
+    >
+      <div formArrayName="items" class="flex flex-col gap-2">
+        <div
+          *ngFor="let item of items.controls; let i = index"
+          [formGroupName]="i"
+          class="flex flex-row gap-4"
+        >
+          <div class="flex flex-col gap-2">
+            <div class="flex flex-row gap-1">
+              <input
+                formControlName="name"
+                placeholder="New Item Name"
+                class="px-1 w-4/5 text-2xl"
+              />
+              <button
+                type="button"
+                (click)="removeItem(i)"
+                class="text-2xl btn bg-red-500 rounded-full px-2 cursor-pointer hover:bg-red-600 border border-white"
+              >
+                Remove
+              </button>
+            </div>
+
+            <div class="flex">
+              <div class="w-1/5 relative">
+                <div
+                  class="border-b-4 border-l-4 border-green-700 w-4 h-4 absolute top-0 right-2"
+                ></div>
+              </div>
+              <input
+                formControlName="url"
+                placeholder="New Item URL"
+                class="w-3/5 px-1 text-2xl"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formularul de adăugare element nou -->
+      <ng-container *ngIf="items.length < maxCount" [formGroup]="addForm">
+        <div class="flex flex-col gap-2">
+          <div class="flex flex-row gap-1">
+            <input
+              formControlName="itemName"
+              placeholder="New Item Name"
+              class="px-1 w-4/5 text-2xl"
+            />
+            <button
+              type="button"
+              (click)="addItem()"
+              class="text-2xl btn bg-orange-200 rounded-full w-1/5 cursor-pointer hover:bg-orange-400 border border-white"
+            >
+              Add
+            </button>
+          </div>
+
+          <div class="flex">
+            <div class="w-1/5 relative">
+              <div
+                class="border-b-4 border-l-4 border-green-700 w-4 h-4 absolute top-0 right-2"
+              ></div>
+            </div>
+            <input
+              formControlName="itemURL"
+              placeholder="New Item URL"
+              class="w-3/5 px-1 text-2xl"
+            />
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- Butonul de submit -->
+
+      <button
+        type="submit"
+        class="text-2xl btn bg-[#FAC900] rounded-full p-2 cursor-pointer hover:bg-[#fac800b4]"
+        [disabled]="!wishlistForm.valid"
+      >
+        Submit Wishlist
+      </button>
+    </form>
+  </div>
+</div>

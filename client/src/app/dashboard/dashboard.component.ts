@@ -4,7 +4,7 @@ import { DashboardCardComponent } from './components/dashboard-card/dashboard-ca
 import { EventResponse } from '../eveniment/models/EventResponse';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faAdd } from '@fortawesome/free-solid-svg-icons';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { CommonModule } from '@angular/common';
 

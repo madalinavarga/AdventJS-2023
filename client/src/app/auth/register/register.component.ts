@@ -12,7 +12,7 @@ import { Subject, takeUntil } from 'rxjs';
 export class RegisterComponent implements OnInit, OnDestroy {
   registerForm!: FormGroup
   unsubscribe = new Subject<void>();
-  constructor(private _formBuilder: FormBuilder, private _registerApiService: RegisterApiService, private _router: Router) {
+  constructor(private formBuilder: FormBuilder, private _registerApiService: RegisterApiService, private _router: Router) {
 
   }
   ngOnDestroy(): void {
@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.registerForm = this._formBuilder.group({
+    this.registerForm = this.formBuilder.group({
       email: ['Email', [Validators.required, Validators.email]],
       password: ['Password', Validators.required],
       firstName: ['First Name', Validators.required],

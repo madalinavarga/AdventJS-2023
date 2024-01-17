@@ -8,19 +8,29 @@
   @if(inviteDetails){
   <h1>Status: {{ inviteDetails.status | convertStatus }}</h1>
   }
-  <div class="flex space-x-4 my-4">
-    <button
-      class="bg-green-600 rounded-full font-bold py-3 px-6 hover:bg-green-700 transition duration-300"
-      (click)="handleInitationStatus(2)"
-    >
-      <fa-icon [icon]="acceptIcon"></fa-icon>
-    </button>
-    <button
-      class="bg-red-600 font-bold py-3 px-6 rounded-full hover:bg-red-700 transition duration-300"
-      (click)="handleInitationStatus(1)"
-    >
-      <fa-icon [icon]="rejectIcon"></fa-icon>
-    </button>
+  <div class="flex gap-x-20 my-4 items-center">
+    <div class="relative">
+      <button
+        class="bg-green-600 rounded-full font-bold py-3 px-6 hover:bg-green-700 transition duration-300 absolute -ml-16"
+        (click)="handleInitationStatus(2)"
+      >
+        <fa-icon [icon]="acceptIcon"></fa-icon>
+      </button>
+      <span class="text-xl bg-white border-1 py-3 px-6 font-bold"
+        >I will be there</span
+      >
+    </div>
+    <div class="relative">
+      <button
+        class="bg-red-600 font-bold py-3 px-6 rounded-full hover:bg-red-700 transition duration-300 absolute -ml-16"
+        (click)="handleInitationStatus(1)"
+      >
+        <fa-icon [icon]="rejectIcon"></fa-icon>
+      </button>
+      <span class="text-xl bg-white border-1 py-3 px-6 font-bold"
+        >Decline</span
+      >
+    </div>
   </div>
 </div>
 

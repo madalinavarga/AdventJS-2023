@@ -67,12 +67,6 @@ public class ServerDbContext : DbContext
             .HasForeignKey(e => e.UserId)
             .OnDelete(DeleteBehavior.NoAction);
 
-
-        modelBuilder.Entity<WishList>()
-            .HasOne(u => u.Event)
-            .WithMany()
-            .HasForeignKey(e => e.EventId);
-
         modelBuilder.Entity<WishList>()
             .HasOne(u => u.User)
             .WithMany()
