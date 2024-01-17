@@ -20,15 +20,15 @@ public class WishlistController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] IList<WishlistCreate> wishes)
     {
-        var existingWishlist = await _wishlistRepository.Get(Guid.Parse(userId));
 
-        if (existingWishlist.Count == 5)
+        if (wishes.Count > 5)
         {
             return Problem("To many items");
         }
 
         try
         {
+            await _wishlistRepository.DeleteAsync(Guid.Parse(userId));
 
             foreach (var wish in wishes)
             {

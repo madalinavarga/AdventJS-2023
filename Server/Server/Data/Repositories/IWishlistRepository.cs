@@ -5,4 +5,5 @@ namespace Server.Data.Repositories;
     {
         Task AddAsync(WishList wish);
         Task<IList<WishList>> Get(Guid userId);
+        Task DeleteAsync(Guid userId);
     }
