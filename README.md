@@ -1,4 +1,4 @@
-# AdventJS-2023
+# AdventJS-2023-Challenge
 
 # Login
 ![image](https://github.com/madalinavarga/AdventJS-2023/assets/79206952/f7475529-cdd2-4fe0-9fe5-3c119623fb52)
